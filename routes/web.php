@@ -63,5 +63,30 @@ Route::post('/articles', function (Request $request) {   //글쓰기를 완료�
     // if(strlen($body) > 255){
     //     return redirect()-> back();
     // }
+    //글을 저장한다.
+
+
+
+
+
+    $host = config('database.connection.mysql.host');
+    $dbname = config('database.connection.mysql.database');
+    $username = config('database.connection.mysql.username');
+    $password = config('database.connection.mysql.password');
+    // 1. pdo 객체를 만든다.
+    $conn = new PDO("mysql:host=$host;dbname=$dbname",$username, $password);
+
+
+        dd($request->all());
+        $body = $request->input('body');
+    // 2. 쿼리 준비
+    $stmt = $conn->prepare("INSERT INTO articles (body, use_id) VALUES(:boyd,:userId)");
+
+    // 3. 쿼리 값을 설정
+    $stmt->bindValue(':body','본문내용');
+    $stmt->bindValue(':userId','사용자의 아이디');
+    // 4. 실행
+    
+
     return 'hello';
 });
